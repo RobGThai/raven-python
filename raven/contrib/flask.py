@@ -191,7 +191,7 @@ class Sentry(object):
         return request.data
 
     def get_http_info_with_retriever(self, request,
-                                     retriever=get_form_data):
+                                     retriever=None):
         """
         Exact method for getting http_info but with form data work around.
         """
@@ -199,7 +199,7 @@ class Sentry(object):
 
         try:
             data = retriever(request)
-        except ClientDisconnected:
+        except (ClientDisconnected, TypeError):
             data = {}
 
         return {
